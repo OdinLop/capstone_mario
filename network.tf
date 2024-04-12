@@ -112,7 +112,7 @@ resource "aws_route_table" "main-private" {
   }
 }
 
-#Route table associations
+#Routing tables
 resource "aws_route_table_association" "PublicSubn1-A" {
   subnet_id      = aws_subnet.PublicSubn1.id
   route_table_id = aws_route_table.main-public.id

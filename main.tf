@@ -49,7 +49,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 }
 
 #Code for deploying the node Group to EKS cluster
-resource "aws_eks_node_group" "node-group" {
+resource "aws_eks_node_group" "node-group_for_eks" {
   cluster_name    = aws_eks_cluster.app_cluster.name
   node_group_name = var.node_group_name
   node_role_arn   = aws_iam_role.node-role.arn
@@ -57,14 +57,14 @@ resource "aws_eks_node_group" "node-group" {
     aws_subnet.PrivateSubn1A.id, 
     aws_subnet.PrivateSubn2B.id]
 
-  scaling_config {
-    desired_size = 1
-    max_size     = 2
-    min_size     = 1
-  }
   instance_types = [ "t2.micro" ]
-  capacity_type = "ON_DEMAND"
   disk_size = 20
+  scaling_config {
+    desired_size = 3
+    max_size     = 3
+    min_size     = 2
+  }
+
   
 
   depends_on = [
