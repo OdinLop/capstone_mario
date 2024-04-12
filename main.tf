@@ -1,4 +1,4 @@
-# EKS_CLUSTER
+# Code for Deploying the EKS Cluster
 resource "aws_eks_cluster" "app_cluster" {      
   name     = var.cluster_name
   role_arn = aws_iam_role.eks-role.arn
@@ -16,7 +16,7 @@ resource "aws_eks_cluster" "app_cluster" {
    
   ]
 }
-#Policy
+#Policies assignment
 
 resource "aws_iam_role" "node-role" {
   name = "node-role"
@@ -48,7 +48,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   role       = aws_iam_role.node-role.name
 }
 
-#NodeGroup
+#Code for deploying the node Group to EKS cluster
 resource "aws_eks_node_group" "node-group" {
   cluster_name    = aws_eks_cluster.app_cluster.name
   node_group_name = var.node_group_name
@@ -74,7 +74,7 @@ resource "aws_eks_node_group" "node-group" {
   ]
 }
 
-#EKS_Outputs
+#Outputs
 output "endpoint" {
   value = "${aws_eks_cluster.app_cluster.endpoint}"
 }
